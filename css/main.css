@@ -356,8 +356,32 @@ a:hover {
   margin-bottom: var(--space-3);
 }
 
-.about-grid p + p {
+/* Space between consecutive blocks (paragraphs, lists) in a column.
+   Same "* + *" trick as .prose further down. */
+.about-grid > div > * + * {
   margin-top: var(--space-3);
+}
+
+/* Bulleted lists. The browser draws the bullets; we just set the indent
+   and color them with the accent. Nested lists get a hollow bullet so
+   the hierarchy reads at a glance. */
+.bullet-list,
+.bullet-list ul {
+  max-width: var(--reading-width);
+  padding-left: var(--space-5);
+}
+
+.bullet-list ul {
+  list-style-type: circle;
+  margin-top: var(--space-1);
+}
+
+.bullet-list li + li {
+  margin-top: var(--space-1);
+}
+
+.bullet-list li::marker {
+  color: var(--color-accent);
 }
 
 
