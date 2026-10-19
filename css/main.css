@@ -341,13 +341,44 @@ a:hover {
 
 /* Two columns on wide screens (work | personal), stacked on phones. */
 .about-grid {
+  --about-gap: var(--space-7);   /* local variable so the divider can find the middle of the gap */
   display: grid;
-  gap: var(--space-6);
+  gap: var(--about-gap);
+}
+
+/* Subtle divider between the two columns. It's drawn by a ::before
+   pseudo-element on the second column and pulled back into the gap, so
+   neither column's text moves. The gradient fades the line out at both
+   ends so it reads as a soft separation, not a hard border.
+   Phones (stacked): a horizontal line in the gap above "Off the clock". */
+.about-grid > div + div {
+  position: relative;   /* lets ::before position itself against this column */
+}
+
+.about-grid > div + div::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(var(--about-gap) / -2);   /* halfway up into the gap */
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-border) 20%, var(--color-border) 80%, transparent);
 }
 
 @media (min-width: 48rem) {
   .about-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  /* Side by side: switch the line from horizontal to vertical. */
+  .about-grid > div + div::before {
+    top: 0;
+    bottom: 0;
+    left: calc(var(--about-gap) / -2);   /* halfway back into the gap */
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(to bottom, transparent, var(--color-border) 15%, var(--color-border) 85%, transparent);
   }
 }
 
