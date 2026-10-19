@@ -11,7 +11,7 @@ css/main.css               layout + components. Only uses var(--...) from theme.
 js/main.js                 mobile menu toggle + footer year. Site works without it.
 assets/img/                images. placeholder.svg is the stand-in for everything.
 projects/project-template.html   copy this for each new project page
-projects/high-roller.html, wormhole.html   the two mod pages (still placeholder text)
+projects/wormhole.html     Wormhole mod page
 .nojekyll                  tells GitHub Pages not to run Jekyll (see below)
 ```
 
