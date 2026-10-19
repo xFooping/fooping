@@ -551,6 +551,39 @@ a:hover {
   color: var(--color-text-muted);
 }
 
+/* Future goals: hollow dot and slightly faded, so the past reads as
+   "done" and the future reads as "ahead". */
+.timeline__item[data-status="planned"]::before {
+  background: var(--color-bg);
+  border: 2px solid var(--color-accent);
+  box-shadow: none;
+}
+
+.timeline__item[data-status="planned"] .timeline__title {
+  color: var(--color-text-muted);
+}
+
+/* ---- Roadmap focus ------------------------------------------------------
+   main.js sets --focus on each milestone: 1 when it sits in the middle of
+   the screen, falling to 0 as it scrolls away. Everything below is just
+   math on that one number, so the look stays tweakable from CSS:
+     scale:   0.92 (far)  -> 1.12 (centered)
+     opacity: 0.55 (far)  -> 1    (centered)
+   Without JS (or with reduced motion) --focus stays 1: everything full size.
+
+   transform-origin is pinned to the dot's center, so the item grows out
+   from its dot and the dot never slides off the line. */
+.timeline__item {
+  --focus: 1;
+  transform: scale(calc(0.92 + 0.2 * var(--focus)));
+  transform-origin: calc(-1 * var(--space-5) - 1px) calc(0.45em + 5px);
+  opacity: calc(0.55 + 0.45 * var(--focus));
+  will-change: transform, opacity;   /* hint: keep this on the GPU, smoother scrolling */
+  /* Leave room for the 1.12x growth. Without this, a fully focused item is
+     wider than the screen on phones and the page scrolls sideways. */
+  max-width: calc(100% / 1.12);
+}
+
 
 /* ==== 9. Contact ========================================================== */
 

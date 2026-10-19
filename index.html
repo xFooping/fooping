@@ -177,44 +177,63 @@
 
 
     <!-- ================================================================
-         4. ACCOMPLISHMENTS
+         4. ACCOMPLISHMENTS (roadmap)
          ----------------------------------------------------------------
-         Newest first. data-kind="work" gets a purple dot,
-         data-kind="personal" gets a magenta dot.
-         <time datetime="YYYY-MM"> is machine-readable; the text inside
-         it is what people see, so format that however you like.
+         Oldest at the top, newest/future at the bottom, like a roadmap.
+
+         Each <li> is one milestone:
+           data-kind="work"      -> purple dot
+           data-kind="personal"  -> magenta dot
+           data-status="planned" -> hollow dot + faded, for future goals
+         <time datetime="YYYY"> is machine-readable; the text inside it is
+         what people see.
+
+         main.js makes each milestone grow as it nears the middle of the
+         screen and shrink as it scrolls away (see "Roadmap focus").
          ================================================================ -->
     <section class="section" id="accomplishments" aria-labelledby="accomplishments-title">
       <div class="container">
         <h2 class="section__title" id="accomplishments-title">Accomplishments</h2>
 
         <ol class="timeline">
-          <li class="timeline__item" data-kind="personal">
+          <li class="timeline__item" data-kind="work">
             <div class="timeline__meta">
-              <time class="eyebrow todo" datetime="2026">20XX</time>
-              <span class="tag">Personal</span>
+              <time class="eyebrow" datetime="2023">2023</time>
+              <span class="tag">Work</span>
             </div>
-            <h3 class="timeline__title">Released Wormhole</h3>
-            <p class="timeline__desc todo">PLACEHOLDER. One line on what it was and why it mattered (downloads, feedback, what you learned).</p>
-          </li>
-
-          <li class="timeline__item" data-kind="personal">
-            <div class="timeline__meta">
-              <time class="eyebrow todo" datetime="2026">20XX</time>
-              <span class="tag">Personal</span>
-            </div>
-            <h3 class="timeline__title">Released High Roller</h3>
-            <p class="timeline__desc todo">PLACEHOLDER. One line on what it was and why it mattered.</p>
+            <h3 class="timeline__title">CompTIA A+ Certification</h3>
+            <p class="timeline__desc">Passed both Core 1 (220-1101) and Core 2 (220-1102) exams.</p>
           </li>
 
           <li class="timeline__item" data-kind="work">
             <div class="timeline__meta">
-              <time class="eyebrow todo" datetime="2026">20XX</time>
+              <time class="eyebrow" datetime="2023">2023</time>
               <span class="tag">Work</span>
             </div>
-            <h3 class="timeline__title todo">Work milestone</h3>
-            <p class="timeline__desc todo">PLACEHOLDER. A project you shipped, a cert, a promotion, a system you migrated.</p>
+            <h3 class="timeline__title">Associate's Degree in IT Networking</h3>
+            <p class="timeline__desc">Graduated with an Associate's degree in Information Technology Networking.</p>
           </li>
+
+          <li class="timeline__item" data-kind="personal">
+            <div class="timeline__meta">
+              <time class="eyebrow" datetime="2025">2025</time>
+              <span class="tag">Personal</span>
+            </div>
+            <h3 class="timeline__title">Released Wormhole</h3>
+            <p class="timeline__desc">Shipped 15 Jokers with my team as part of Balatro's biggest community-driven mod.</p>
+          </li>
+
+          <!-- FUTURE GOAL TEMPLATE: copy this, remove the comment markers,
+               and fill it in. data-status="planned" gives it the hollow dot.
+          <li class="timeline__item" data-kind="work" data-status="planned">
+            <div class="timeline__meta">
+              <time class="eyebrow" datetime="2027">2027</time>
+              <span class="tag">Planned</span>
+            </div>
+            <h3 class="timeline__title">Next goal</h3>
+            <p class="timeline__desc">What you're aiming for.</p>
+          </li>
+          -->
         </ol>
       </div>
     </section>
