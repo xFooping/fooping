@@ -1,0 +1,681 @@
+/* ==========================================================================
+   main.css — LAYOUT AND COMPONENTS
+   --------------------------------------------------------------------------
+   Rule of thumb: no raw colors, fonts, or magic spacing numbers in here.
+   Everything comes from a var(--something) defined in theme.css.
+
+   Sections (search for the ==== headers):
+     1. Reset & base
+     2. Layout helpers
+     3. Header & nav
+     4. Hero
+     5. Generic section styles
+     6. About
+     7. Project cards
+     8. Accomplishments timeline
+     9. Contact
+    10. Footer
+    11. Project detail page
+    12. Placeholders
+    13. Reduced motion
+    14. Project page spacing
+   ========================================================================== */
+
+
+/* ==== 1. Reset & base ===================================================== */
+
+/* border-box: an element's width includes its padding and border.
+   Without this, `width: 100%` + padding overflows its parent. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  /* Smooth-scroll when clicking #anchor links in the nav. */
+  scroll-behavior: smooth;
+  /* Stops anchored sections from hiding under the sticky header. */
+  scroll-padding-top: 5rem;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--line-height-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  image-rendering: var(--image-rendering);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-heading);
+  font-weight: 700;
+}
+
+p {
+  max-width: var(--reading-width);
+}
+
+a {
+  color: var(--color-accent-2);
+  text-underline-offset: 0.2em;
+  transition: color var(--transition);
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+/* Visible keyboard focus. Never remove outlines without a replacement,
+   otherwise keyboard users can't see where they are. */
+:focus-visible {
+  outline: 2px solid var(--color-accent-2);
+  outline-offset: 3px;
+}
+
+/* "Skip to content" link: hidden off-screen until a keyboard user tabs
+   to it, then it appears top-left. */
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: -100px;
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+
+/* ==== 2. Layout helpers =================================================== */
+
+/* Centers content and caps its width. Padding keeps text off the
+   screen edges on phones. */
+.container {
+  width: 100%;
+  max-width: var(--content-width);
+  margin-inline: auto;          /* = margin-left + margin-right: auto */
+  padding-inline: var(--space-4);
+}
+
+@media (min-width: 48rem) {     /* 768px and up */
+  .container {
+    padding-inline: var(--space-6);
+  }
+}
+
+/* Small uppercase monospace label, used above headings and in meta rows. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Buttons. .btn is the base; --primary / --ghost are variants. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-5);
+  border: var(--border-width) solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+}
+
+.btn--primary {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.btn--primary:hover {
+  color: var(--color-on-accent);
+  box-shadow: var(--glow-box);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text);
+}
+
+.btn--ghost:hover {
+  color: var(--color-text);
+  box-shadow: var(--glow-box);
+}
+
+/* Small pill for tools/tech, e.g. "Lua". */
+.tag {
+  display: inline-block;
+  padding: var(--space-1) var(--space-2);
+  background: var(--color-surface-2);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+}
+
+
+/* ==== 3. Header & nav ===================================================== */
+
+.site-header {
+  /* sticky = scrolls normally until it hits the top, then stays there. */
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  /* color-mix() blends the page background with transparency (85% bg,
+     15% see-through), so the header stays slightly translucent and still
+     follows whatever --color-bg is set to. */
+  background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 4rem;
+}
+
+.site-logo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  text-decoration: none;
+  text-shadow: var(--glow-text);
+}
+
+.site-logo:hover {
+  color: var(--color-accent);
+}
+
+/* Mobile-first: the toggle button shows on small screens,
+   the link list is hidden until the button is pressed. */
+.nav-toggle {
+  display: inline-flex;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+
+.site-nav__list {
+  display: none;
+  list-style: none;
+  padding: 0;
+}
+
+/* main.js sets data-open="true" on the nav when the button is pressed. */
+.site-nav[data-open="true"] .site-nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  background: var(--color-bg);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.site-nav__list a {
+  display: block;
+  padding: var(--space-2) 0;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.site-nav__list a:hover {
+  color: var(--color-accent-2);
+}
+
+/* Desktop: hide the toggle, always show links in a row. */
+@media (min-width: 48rem) {
+  .nav-toggle {
+    display: none;
+  }
+
+  .site-nav__list,
+  .site-nav[data-open="true"] .site-nav__list {
+    display: flex;
+    flex-direction: row;
+    gap: var(--space-5);
+    position: static;
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+}
+
+
+/* ==== 4. Hero ============================================================= */
+
+.hero {
+  padding-block: var(--space-8) var(--space-7);
+}
+
+.hero__name {
+  font-size: var(--text-hero);
+  color: var(--color-text);
+  text-shadow: var(--glow-text);
+  margin-block: var(--space-2) var(--space-4);
+}
+
+.hero__tagline {
+  font-size: var(--text-xl);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-6);
+}
+
+.hero__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+
+/* ==== 5. Generic section styles =========================================== */
+
+.section {
+  padding-block: var(--space-7);
+  border-top: var(--border-width) solid var(--color-border);
+}
+
+.section__title {
+  font-size: var(--text-2xl);
+  color: var(--color-accent);
+  text-shadow: var(--glow-text);
+  margin-bottom: var(--space-5);
+}
+
+/* The small "//" before section titles. Purely decorative, which is why
+   it lives in CSS (screen readers skip it) and not in the HTML. */
+.section__title::before {
+  content: "// ";
+  color: var(--color-accent-2);
+}
+
+
+/* ==== 6. About ============================================================ */
+
+/* Two columns on wide screens (work | personal), stacked on phones. */
+.about-grid {
+  display: grid;
+  gap: var(--space-6);
+}
+
+@media (min-width: 48rem) {
+  .about-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about-grid h3 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-3);
+}
+
+.about-grid p + p {
+  margin-top: var(--space-3);
+}
+
+
+/* ==== 7. Project cards ==================================================== */
+
+/* auto-fill + minmax = "fit as many 18rem-wide columns as possible, and
+   stretch them to fill the row". This makes the grid responsive with
+   zero media queries: 1 column on phones, 2-3 on desktops. */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+  gap: var(--space-5);
+  list-style: none;
+  padding: 0;
+}
+
+.project-card {
+  /* Flex column so the links row can be pushed to the bottom,
+     keeping cards of different text lengths visually aligned. */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;   /* clips the image to the rounded corners */
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.project-card:hover,
+.project-card:focus-within {
+  border-color: var(--color-accent);
+  box-shadow: var(--glow-box);
+}
+
+/* aspect-ratio reserves the image's space before it loads, so the
+   page doesn't jump around. object-fit: cover crops instead of squashing. */
+.project-card__media {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  object-fit: cover;
+  background: var(--color-surface-2);
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.project-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  flex: 1;            /* grow to fill the card, see note on .project-card */
+  padding: var(--space-5);
+}
+
+.project-card__title {
+  font-size: var(--text-xl);
+}
+
+.project-card__title a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.project-card__title a:hover {
+  color: var(--color-accent);
+}
+
+.project-card__pitch {
+  color: var(--color-text-muted);
+}
+
+.project-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: auto;   /* pushes this row to the bottom of the card */
+  padding-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+
+/* ==== 8. Accomplishments timeline ========================================= */
+
+/* A vertical line down the left, with a dot per entry.
+   The line is the <ol>'s left border; dots are ::before pseudo-elements. */
+.timeline {
+  list-style: none;
+  padding: 0 0 0 var(--space-5);
+  border-left: 2px solid var(--color-border);
+}
+
+.timeline__item {
+  position: relative;
+  padding-bottom: var(--space-6);
+}
+
+.timeline__item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  /* Center the 10px dot on the 2px line. Measured from the item's left edge:
+     go back over the list padding (--space-5), then half the line (1px),
+     then half the dot (5px). 1 + 5 = 6px. */
+  left: calc(-1 * var(--space-5) - 6px);
+  top: 0.45em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: var(--glow-box);
+}
+
+/* Personal milestones get a magenta dot to tell them apart at a glance. */
+.timeline__item[data-kind="personal"]::before {
+  background: var(--color-accent-2);
+}
+
+.timeline__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-bottom: var(--space-1);
+}
+
+.timeline__title {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-1);
+}
+
+.timeline__desc {
+  color: var(--color-text-muted);
+}
+
+
+/* ==== 9. Contact ========================================================== */
+
+.contact-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-5);
+}
+
+.contact-list a {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.contact-list a:hover {
+  border-color: var(--color-accent);
+  box-shadow: var(--glow-box);
+}
+
+.contact-list .eyebrow {
+  margin-bottom: var(--space-1);
+}
+
+
+/* ==== 10. Footer ========================================================== */
+
+.site-footer {
+  padding-block: var(--space-6);
+  border-top: var(--border-width) solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+
+/* ==== 11. Project detail page ============================================= */
+
+.project-hero {
+  padding-block: var(--space-7) var(--space-5);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.project-hero__title {
+  font-size: var(--text-hero);
+  text-shadow: var(--glow-text);
+  margin-block: var(--space-2) var(--space-3);
+}
+
+.project-hero__pitch {
+  font-size: var(--text-xl);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-5);
+}
+
+.project-media {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  object-fit: cover;
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface-2);
+}
+
+/* The "facts" box: role, tools, status, dates. A <dl> (description list)
+   is the semantic HTML element for label/value pairs. */
+.project-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  gap: var(--space-4);
+  padding: var(--space-5);
+  margin-block: var(--space-6);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.project-facts dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.project-facts dd {
+  margin: var(--space-1) 0 0;
+}
+
+/* Long-form writeup area. Spacing between consecutive elements uses the
+   "lobotomized owl" selector (* + *): every child except the first gets
+   a top margin. Saves writing margins on every element type. */
+.prose > * + * {
+  margin-top: var(--space-4);
+}
+
+.prose h2 {
+  font-size: var(--text-xl);
+  color: var(--color-accent);
+  margin-top: var(--space-7);
+}
+
+.prose ul,
+.prose ol {
+  max-width: var(--reading-width);
+  padding-left: var(--space-5);
+}
+
+.prose li + li {
+  margin-top: var(--space-2);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.1em 0.35em;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-sm);
+}
+
+/* Gallery of extra screenshots on detail pages. */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--space-4);
+  list-style: none;
+  padding: 0;
+}
+
+.gallery figcaption {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+
+/* ==== 12. Placeholders ==================================================== */
+
+/* Anything wrapped in .todo is placeholder text you still need to replace.
+   The dashed magenta outline makes it impossible to miss. Search the HTML
+   for class="todo" to find every one. Delete the class once it's real. */
+.todo {
+  outline: 1px dashed var(--color-accent-2);
+  outline-offset: 2px;
+}
+
+
+/* ==== 13. Reduced motion ================================================== */
+
+/* Respect the OS-level "reduce motion" setting. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}
+
+
+/* ==== 14. Project page spacing ============================================ */
+
+/* Breathing room between the end of a project writeup and the footer. */
+.project-page {
+  padding-bottom: var(--space-8);
+}

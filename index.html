@@ -1,0 +1,264 @@
+<!doctype html>
+<!--
+  To try the pixel theme: change the line below to
+    <html lang="en" data-theme="pixel">
+  (see css/theme.css for what that switches)
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Makes phones render at real width instead of a zoomed-out desktop view.
+       Without this line, none of the mobile CSS would kick in. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Brayden Reed</title>
+  <meta name="description" content="Brayden Reed: IT by day, game dev, modder, and pixel artist by night.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+  <!-- Fonts (Google Fonts).
+       preconnect = open the connection early so fonts arrive faster.
+       Silkscreen is only for the pixel theme. Browsers only download a font
+       file when something on the page actually uses it, so listing it here
+       costs nothing while the neon theme is active. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;600&family=Orbitron:wght@600;700&family=Silkscreen&display=swap">
+
+  <!-- Order matters: theme.css defines the variables, main.css uses them. -->
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- defer: download now, run after the HTML is parsed. -->
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ================================================================
+       HEADER / NAV
+       ================================================================ -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="site-logo" href="#top">Fooping</a>
+
+      <nav class="site-nav" aria-label="Main" data-open="false">
+        <!-- Only visible on small screens; main.js handles the click. -->
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-list">Menu</button>
+        <ul class="site-nav__list" id="nav-list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#accomplishments">Accomplishments</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ================================================================
+         1. HERO
+         ================================================================ -->
+    <section class="hero" id="top">
+      <div class="container">
+        <p class="eyebrow">Hi, I'm</p>
+        <h1 class="hero__name">Brayden Reed</h1>
+        <!-- TODO: your one-liner. Keep it to one sentence. -->
+        <p class="hero__tagline todo">Healthcare IT by day. Game dev, Balatro modder, and pixel artist the rest of the time.</p>
+
+        <div class="hero__links">
+          <a class="btn btn--primary" href="#projects">See projects</a>
+          <a class="btn btn--ghost" href="https://github.com/xFooping" rel="me">GitHub</a>
+          <a class="btn btn--ghost" href="#contact">Contact</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+         2. ABOUT
+         ================================================================ -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <h2 class="section__title" id="about-title">About</h2>
+
+        <div class="about-grid">
+          <div>
+            <h3>At work</h3>
+            <!-- TODO: role, what you actually do day to day, what you're good at. -->
+            <p class="todo">PLACEHOLDER. I work in IT in healthcare. Write a couple of sentences on your role, the systems you deal with, and what you're proud of there.</p>
+          </div>
+
+          <div>
+            <h3>Off the clock</h3>
+            <!-- TODO: hobbies, what got you into modding / pixel art, what you're learning. -->
+            <p class="todo">PLACEHOLDER. Hobbyist game developer, modder, and pixel artist. Mention how you got into Balatro modding, what you like building, and what you're learning next.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+         3. PROJECTS
+         ----------------------------------------------------------------
+         To add a project:
+           1. Copy one <li class="project-card"> block below.
+           2. Copy projects/project-template.html to projects/your-slug.html.
+           3. Point the card's links at that new page.
+         ================================================================ -->
+    <section class="section" id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <h2 class="section__title" id="projects-title">Projects</h2>
+
+        <ul class="project-grid">
+
+          <!-- ---- Project: High Roller ---- -->
+          <li>
+            <article class="project-card">
+              <!-- TODO: swap for a real screenshot or GIF (16:9 works best).
+                   width/height let the browser reserve space before it loads. -->
+              <img class="project-card__media" src="assets/img/placeholder.svg"
+                   alt="PLACEHOLDER: High Roller screenshot" width="640" height="360" loading="lazy">
+              <div class="project-card__body">
+                <p class="eyebrow">Balatro mod</p>
+                <h3 class="project-card__title"><a href="projects/high-roller.html">High Roller</a></h3>
+                <p class="project-card__pitch todo">PLACEHOLDER pitch. One or two sentences on what the mod adds and why it's fun.</p>
+                <p class="eyebrow">Role: <span class="todo">Solo developer</span></p>
+                <ul class="tag-list" aria-label="Tools">
+                  <li class="tag">Lua</li>
+                  <li class="tag">Steamodded</li>
+                </ul>
+                <div class="project-card__links">
+                  <a href="projects/high-roller.html">Details →</a>
+                  <!-- TODO: real repo / download URL -->
+                  <a class="todo" href="#">Source</a>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- Project: Wormhole ---- -->
+          <li>
+            <article class="project-card">
+              <img class="project-card__media" src="assets/img/placeholder.svg"
+                   alt="PLACEHOLDER: Wormhole screenshot" width="640" height="360" loading="lazy">
+              <div class="project-card__body">
+                <p class="eyebrow">Balatro mod</p>
+                <h3 class="project-card__title"><a href="projects/wormhole.html">Wormhole</a></h3>
+                <p class="project-card__pitch todo">PLACEHOLDER pitch. One or two sentences on what the mod adds and why it's fun.</p>
+                <p class="eyebrow">Role: <span class="todo">Solo developer</span></p>
+                <ul class="tag-list" aria-label="Tools">
+                  <li class="tag">Lua</li>
+                  <li class="tag">Steamodded</li>
+                </ul>
+                <div class="project-card__links">
+                  <a href="projects/wormhole.html">Details →</a>
+                  <a class="todo" href="#">Source</a>
+                </div>
+              </div>
+            </article>
+          </li>
+
+          <!-- ---- Project: placeholder for the next thing ---- -->
+          <li>
+            <article class="project-card">
+              <img class="project-card__media" src="assets/img/placeholder.svg"
+                   alt="PLACEHOLDER project image" width="640" height="360" loading="lazy">
+              <div class="project-card__body">
+                <p class="eyebrow todo">Pixel art / game / tool</p>
+                <h3 class="project-card__title"><a href="projects/project-template.html">Project Title</a></h3>
+                <p class="project-card__pitch todo">PLACEHOLDER. A third card so you can see how the grid fills. Delete it or turn it into a real project.</p>
+                <p class="eyebrow">Role: <span class="todo">Your role</span></p>
+                <ul class="tag-list" aria-label="Tools">
+                  <li class="tag todo">Tool</li>
+                  <li class="tag todo">Tool</li>
+                </ul>
+                <div class="project-card__links">
+                  <a href="projects/project-template.html">Details →</a>
+                </div>
+              </div>
+            </article>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+         4. ACCOMPLISHMENTS
+         ----------------------------------------------------------------
+         Newest first. data-kind="work" gets a purple dot,
+         data-kind="personal" gets a magenta dot.
+         <time datetime="YYYY-MM"> is machine-readable; the text inside
+         it is what people see, so format that however you like.
+         ================================================================ -->
+    <section class="section" id="accomplishments" aria-labelledby="accomplishments-title">
+      <div class="container">
+        <h2 class="section__title" id="accomplishments-title">Accomplishments</h2>
+
+        <ol class="timeline">
+          <li class="timeline__item" data-kind="personal">
+            <div class="timeline__meta">
+              <time class="eyebrow todo" datetime="2026">20XX</time>
+              <span class="tag">Personal</span>
+            </div>
+            <h3 class="timeline__title">Released Wormhole</h3>
+            <p class="timeline__desc todo">PLACEHOLDER. One line on what it was and why it mattered (downloads, feedback, what you learned).</p>
+          </li>
+
+          <li class="timeline__item" data-kind="personal">
+            <div class="timeline__meta">
+              <time class="eyebrow todo" datetime="2026">20XX</time>
+              <span class="tag">Personal</span>
+            </div>
+            <h3 class="timeline__title">Released High Roller</h3>
+            <p class="timeline__desc todo">PLACEHOLDER. One line on what it was and why it mattered.</p>
+          </li>
+
+          <li class="timeline__item" data-kind="work">
+            <div class="timeline__meta">
+              <time class="eyebrow todo" datetime="2026">20XX</time>
+              <span class="tag">Work</span>
+            </div>
+            <h3 class="timeline__title todo">Work milestone</h3>
+            <p class="timeline__desc todo">PLACEHOLDER. A project you shipped, a cert, a promotion, a system you migrated.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+
+    <!-- ================================================================
+         5. CONTACT
+         ================================================================ -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 class="section__title" id="contact-title">Contact</h2>
+        <!-- PRIVACY RULE: no email, phone, address, or anything else that
+             traces back to you personally goes on this site. GitHub is the
+             only contact channel. -->
+        <p>Want to talk mods, pixels, or anything else? Find me on GitHub.</p>
+
+        <ul class="contact-list">
+          <li>
+            <a href="https://github.com/xFooping" rel="me">
+              <span class="eyebrow">GitHub</span>
+              @xFooping
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <!-- main.js fills in the current year. The "2026" is the no-JS fallback. -->
+      <p>© <span data-year>2026</span> Brayden Reed. Hand-built, no frameworks.</p>
+    </div>
+  </footer>
+</body>
+</html>

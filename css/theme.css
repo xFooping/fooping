@@ -1,0 +1,114 @@
+/* ==========================================================================
+   theme.css — DESIGN TOKENS ONLY
+   --------------------------------------------------------------------------
+   Every color, font, size, and effect the site uses is defined here as a
+   CSS custom property (a "variable"). main.css never hard-codes a color or
+   font; it only says things like `color: var(--color-text)`.
+
+   That means re-theming the whole site = editing this one file.
+
+   Two themes live here:
+     1. :root                  -> default neon/cyberpunk theme
+     2. [data-theme="pixel"]   -> starter pixel-art theme (opt-in)
+
+   To try the pixel theme, change the opening tag in index.html to:
+     <html lang="en" data-theme="pixel">
+   ========================================================================== */
+
+:root {
+  /* ---------- Color: surfaces (backgrounds, from darkest to lightest) ---- */
+  --color-bg:          #0a0910;  /* page background, almost black w/ a purple tint */
+  --color-surface:     #14121d;  /* cards, panels */
+  --color-surface-2:   #1d1a2a;  /* hovered cards, inputs, tag chips */
+  --color-border:      #2e2942;  /* quiet dividers and card outlines */
+
+  /* ---------- Color: text ------------------------------------------------
+     Contrast ratios against --color-bg (WCAG AA needs 4.5:1 for body text):
+       --color-text        ~16:1
+       --color-text-muted  ~8:1                                            */
+  --color-text:        #ece9f5;
+  --color-text-muted:  #aaa3c4;
+
+  /* ---------- Color: accents (the "neon") --------------------------------
+     Used for headings, links, buttons, borders on hover. Not paragraphs. */
+  --color-accent:      #b26bff;  /* purple, primary accent */
+  --color-accent-2:    #ff4fd8;  /* magenta, secondary accent */
+  --color-on-accent:   #0a0910;  /* text placed ON an accent-colored button */
+
+  /* ---------- Effects ----------------------------------------------------
+     Glows are just text-/box-shadows. Pulling them into variables means the
+     pixel theme can swap them for hard, blocky shadows (or none). */
+  --glow-text:   0 0 6px rgb(178 107 255 / 0.55), 0 0 18px rgb(178 107 255 / 0.25);
+  --glow-box:    0 0 0 1px var(--color-accent), 0 0 16px rgb(178 107 255 / 0.30);
+  --shadow-card: 0 4px 20px rgb(0 0 0 / 0.45);
+
+  /* ---------- Typography -------------------------------------------------
+     Three roles, so the pixel switch only has to change --font-heading.  */
+  --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading: "Orbitron", "Inter", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, Consolas, monospace;
+
+  /* Font sizes. clamp(min, preferred, max) scales smoothly with the
+     viewport width (vw) but never goes below min or above max, so we
+     don't need separate media queries for headings. */
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-2xl:  clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
+  --text-hero: clamp(2.2rem, 1.5rem + 3.5vw, 4rem);
+
+  --line-height-body:    1.65;
+  --line-height-heading: 1.2;
+  --letter-spacing-heading: 0.04em;
+
+  /* ---------- Spacing scale ----------------------------------------------
+     Use these instead of random pixel values so spacing stays consistent. */
+  --space-1: 0.25rem;  /*  4px */
+  --space-2: 0.5rem;   /*  8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.5rem;   /* 24px */
+  --space-6: 2rem;     /* 32px */
+  --space-7: 3rem;     /* 48px */
+  --space-8: 5rem;     /* 80px */
+
+  /* ---------- Shape & layout --------------------------------------------- */
+  --radius:        10px;   /* card / button corners (pixel theme sets 0) */
+  --radius-sm:     6px;
+  --border-width:  1px;
+  --content-width: 72rem;  /* max width of the main column (~1152px) */
+  --reading-width: 42rem;  /* max width for paragraphs, easier to read */
+
+  /* ---------- Motion ----------------------------------------------------- */
+  --transition: 160ms ease;
+
+  /* How images scale. "auto" smooths them; pixel theme uses "pixelated"
+     so pixel art stays crisp instead of blurry when scaled up. */
+  --image-rendering: auto;
+}
+
+
+/* ==========================================================================
+   PIXEL THEME (starter)
+   --------------------------------------------------------------------------
+   Only overrides what changes. Anything not listed here falls back to the
+   :root value above, which is how CSS variables cascade.
+   Fonts below are loaded in index.html (Silkscreen).
+   ========================================================================== */
+[data-theme="pixel"] {
+  --font-heading: "Silkscreen", var(--font-mono);
+
+  /* Pixel art doesn't do soft blur. Hard, offset "drop shadows" instead. */
+  --glow-text:   2px 2px 0 var(--color-accent-2);
+  --glow-box:    4px 4px 0 var(--color-accent);
+  --shadow-card: 4px 4px 0 #000;
+
+  --radius:       0;
+  --radius-sm:    0;
+  --border-width: 2px;
+
+  --letter-spacing-heading: 0.02em;
+  --image-rendering: pixelated;
+  --transition: 0ms;   /* snappy, frame-step feel */
+}
